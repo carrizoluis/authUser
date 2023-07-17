@@ -33,7 +33,6 @@ public class UserAuthController {
     })
     public UserResponseDTO signUp(@Validated(SignUpRequestDTO.class) @RequestBody SignUpRequestDTO request) throws BadRequestException {
         return userAuthService.signUp(request);
-        //S
     }
 
     @PostMapping("/login")
