@@ -12,6 +12,7 @@ import java.util.List;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
+@Table(name = "user_admin")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,14 +31,14 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, columnDefinition = "datetime default now()")
     @CreatedDate
     private Date createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default 'TRUE'")
     private boolean isActive;
 
-    @OneToMany(mappedBy="phoneid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Phone> phones;
 
 }

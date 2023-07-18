@@ -28,7 +28,6 @@ public class Phone {
     private String countryCode;
 
     @ManyToOne
-    @JoinColumn(name="cart_id", nullable=false)
-    private User user;
+    public User user;
 
 }

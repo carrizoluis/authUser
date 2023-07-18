@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserResponseDTO {
 
-    private String username;
+    private int id;
+    private String created;
+    private String lastLogin;
     private String token;
-    private String expires_in;
+    private boolean isActive;
 
 }
