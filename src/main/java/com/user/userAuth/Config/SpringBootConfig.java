@@ -1,5 +1,6 @@
 package com.user.userAuth.Config;
 
+import com.user.userAuth.Util.JWTUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -31,5 +32,7 @@ public class SpringBootConfig {
                 .version("1.0.0")
                 .build();
     }
+
+
 
 }

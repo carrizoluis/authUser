@@ -5,13 +5,13 @@ import com.user.userAuth.Model.Dto.SignUpRequestDTO;
 import com.user.userAuth.Model.Dto.UserResponseDTO;
 import com.user.userAuth.Model.Entity.Phone;
 import com.user.userAuth.Model.Entity.User;
+import com.user.userAuth.Util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +20,9 @@ public class UserMapper {
 
     @Autowired
     private BCryptPasswordEncoder encryptor;
+
+    @Autowired
+    private JWTUtil jwtUtil;
 
     public User mapRequestToEntity(SignUpRequestDTO userRequestDTO){
         User user = new User();
@@ -47,6 +50,7 @@ public class UserMapper {
     public UserResponseDTO mapEntityToResponse(User user){
         UserResponseDTO response = new UserResponseDTO();
         response.setId(user.getUserid());
+        response.setToken(jwtUtil.getJWTToken(user));
         response.setCreated(user.getCreatedAt().toString());
         response.setActive(user.isActive());
         return response;

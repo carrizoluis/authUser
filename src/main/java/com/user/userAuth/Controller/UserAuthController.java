@@ -35,9 +35,4 @@ public class UserAuthController {
         return userAuthService.signUp(request);
     }
 
-    @PostMapping("/login")
-    public UserResponseDTO login(){
-        return null;
-    }
-
 }
