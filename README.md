@@ -9,6 +9,9 @@ Gradle 7.6.2
 ## Instrucciones de despliegue en local
 Para generar el .jar que luego desplegaremos en el tomcat se debe abrir el proyecto en IntelliJ Community y en la solapa de Gradle ejecutar la task de BUILD.
 
+## Diagramas
+Diagrama de secuencia en carpeta de repositorio /Diagrams.
+
 ## Swagger
 http://localhost:8087/swagger-ui/index.html
 
