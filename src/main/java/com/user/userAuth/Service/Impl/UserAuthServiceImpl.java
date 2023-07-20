@@ -9,7 +9,6 @@ import com.user.userAuth.Repository.PhoneRepository;
 import com.user.userAuth.Repository.UserRepository;
 import com.user.userAuth.Service.UserAuthService;
 import com.user.userAuth.Util.Mapper.UserMapper;
-import com.user.userAuth.Util.ValidationHelper;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,9 +21,6 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private ValidationHelper validationHelper;
 
     @Autowired
     private UserMapper userMapper;
