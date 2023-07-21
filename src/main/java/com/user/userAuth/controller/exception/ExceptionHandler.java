@@ -14,7 +14,7 @@ import java.util.Map;
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<Object> handleBadRequestException(BadRequestException badRequest){
+    public ResponseEntity<Object> handleBadRequestException(BadRequestException badRequest) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
@@ -25,7 +25,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleException(Exception ex){
+    public ResponseEntity<Object> handleException(Exception ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("codigo", 400);

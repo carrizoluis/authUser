@@ -13,25 +13,15 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SpringBootConfig {
 
     @Bean
-    public Docket docket(){
-        return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("authuser")
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.user.userAuth.Controller"))
-                .paths(PathSelectors.any())
-                .build();
+    public Docket docket() {
+        return new Docket(DocumentationType.SWAGGER_2).groupName("authuser").apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.basePackage("com.user.userAuth.Controller")).paths(PathSelectors.any()).build();
 
 
     }
+
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("AuthUser")
-                .description("REST API for User Authentication")
-                .version("1.0.0")
-                .build();
+        return new ApiInfoBuilder().title("AuthUser").description("REST API for User Authentication").version("1.0.0").build();
     }
-
 
 
 }

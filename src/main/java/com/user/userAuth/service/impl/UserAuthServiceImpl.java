@@ -24,18 +24,18 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Override
     public UserResponseDTO signUp(SignUpRequestDTO request) throws BadRequestException {
 
-        try{
-            if(request.getPassword().isEmpty() || request.getPassword().equals(null)){
+        try {
+            if (request.getPassword().isEmpty() || request.getPassword().equals(null)) {
                 throw new BadRequestException("Password is null or empty", HttpStatus.BAD_REQUEST);
             }
 
             //validar formato
 
-            if(userRepository.findByEmail(request.getEmail()) != null){
+            if (userRepository.findByEmail(request.getEmail()) != null) {
                 throw new BadRequestException("User Already Exists", HttpStatus.BAD_REQUEST);
             }
 
-            if(!EmailValidator.getInstance().isValid(request.getEmail())){
+            if (!EmailValidator.getInstance().isValid(request.getEmail())) {
                 throw new BadRequestException("Email has not valid format", HttpStatus.BAD_REQUEST);
             }
 
@@ -43,7 +43,7 @@ public class UserAuthServiceImpl implements UserAuthService {
 
             return userMapper.mapEntityToResponse(savedUser);
 
-        }catch(BadRequestException ex){
+        } catch (BadRequestException ex) {
             throw ex;
         }
     }

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Data
 @AllArgsConstructor
-public class BadRequestException extends Exception{
+public class BadRequestException extends Exception {
 
     private String message;
     private HttpStatus statusCode;
