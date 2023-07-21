@@ -7,10 +7,9 @@ import java.util.List;
 
 public interface PhoneRepository extends CrudRepository<Phone, Integer> {
 
-    public List<Phone> findAll();
+    List<Phone> findAll();
 
-    public Phone findById(int phoneid);
-
+    Phone findById(int phoneid);
 
 
 }

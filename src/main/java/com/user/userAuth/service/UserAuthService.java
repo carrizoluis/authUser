@@ -7,11 +7,12 @@ import com.user.userAuth.model.exception.BadRequestException;
 public interface UserAuthService {
 
 
-    /** This Method enrolls a new user, it returns a new user with a
+    /**
+     * This Method enrolls a new user, it returns a new user with a
      * token to do a login.
      *
      * @return JSON Response DTO
      */
-    public UserResponseDTO signUp(SignUpRequestDTO request) throws BadRequestException;
+    UserResponseDTO signUp(SignUpRequestDTO request) throws BadRequestException;
 
 }

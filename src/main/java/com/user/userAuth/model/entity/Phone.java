@@ -14,20 +14,16 @@ import static javax.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 public class Phone {
 
+    @ManyToOne
+    public User user;
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private int phoneid;
-
     @Column(nullable = false)
     private long number;
-
     @Column(nullable = false)
     private int cityCode;
-
     @Column(nullable = false)
     private String countryCode;
-
-    @ManyToOne
-    public User user;
 
 }
