@@ -18,11 +18,9 @@ public class SignUpRequestDTO {
     @JsonProperty("name")
     private String name;
 
-    @NotNull
     @JsonProperty("email")
     private String email;
 
-    @NotNull
     @JsonProperty("password")
     private String password;
 
