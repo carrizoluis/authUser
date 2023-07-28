@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class JWTUtil {
 
     private final String PREFIX = "Bearer ";
-    private final String HEADER = "Authorization";
     private final String SECRET = "secret";
 
     public String getJWTToken(User username) {

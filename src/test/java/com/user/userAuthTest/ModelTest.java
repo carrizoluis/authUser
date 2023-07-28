@@ -18,7 +18,7 @@ public class ModelTest {
     @Test
     public void testPhoneEntity(){
         User user = new User();
-        Phone phone = new Phone(1,22323L, 2323, "233", user);
+        Phone phone = new Phone(user, 1, 22323L, 2323, "233");
         phone.getUser();
         phone.getPhoneid();
         phone.getCityCode();

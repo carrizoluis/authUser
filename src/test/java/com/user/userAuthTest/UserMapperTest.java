@@ -1,7 +1,6 @@
 package com.user.userAuthTest;
 
 import com.user.userAuth.config.SpringBootConfig;
-import com.user.userAuth.model.dto.PhoneDTO;
 import com.user.userAuth.model.dto.SignUpRequestDTO;
 import com.user.userAuth.model.dto.UserResponseDTO;
 import com.user.userAuth.model.entity.User;
@@ -33,8 +32,8 @@ public class UserMapperTest {
 
 
     @Test
-    public void testMapRequestToEntityAndIsOk(){
-        SignUpRequestDTO requestDTO = new SignUpRequestDTO("name","email@am.com","password",null);
+    public void testMapRequestToEntityAndIsOk() {
+        SignUpRequestDTO requestDTO = new SignUpRequestDTO("name", "email@am.com", "password", null);
 
         User userExpected = new User();
         userExpected.setName("name");
@@ -50,14 +49,14 @@ public class UserMapperTest {
     }
 
     @Test
-    public void testMapEntityToResponseAndIsOk(){
+    public void testMapEntityToResponseAndIsOk() {
         UserResponseDTO userResponseDTOExpected = new UserResponseDTO();
         userResponseDTOExpected.setId(1);
         userResponseDTOExpected.setToken("tokenTest");
         userResponseDTOExpected.setActive(true);
         userResponseDTOExpected.setCreated(Date.valueOf(LocalDate.now()).toString());
 
-        User userActual = new User(1,"lucho","email@email.com","password",Date.valueOf(LocalDate.now()),true,null);
+        User userActual = new User(1, "lucho", "email@email.com", "password", Date.valueOf(LocalDate.now()), true, null);
 
         Mockito.when(jwtUtil.getJWTToken(userActual)).thenReturn("tokenTest");
 

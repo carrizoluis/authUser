@@ -1,5 +1,6 @@
 package com.user.userAuth.service.impl;
 
+import com.user.userAuth.model.dto.PhoneDTO;
 import com.user.userAuth.model.dto.SignUpRequestDTO;
 import com.user.userAuth.model.dto.UserResponseDTO;
 import com.user.userAuth.model.entity.User;
@@ -11,6 +12,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class UserAuthServiceImpl implements UserAuthService {
@@ -25,8 +27,17 @@ public class UserAuthServiceImpl implements UserAuthService {
     public UserResponseDTO signUp(SignUpRequestDTO request) throws BadRequestException {
 
         try {
-            if (request.getPassword().isEmpty() || request.getPassword().equals(null)) {
+
+            if (!StringUtils.hasText(request.getPassword())) {
                 throw new BadRequestException("Password is null or empty", HttpStatus.BAD_REQUEST);
+            }
+
+            if(!StringUtils.hasText(request.getEmail())){
+                throw new BadRequestException("Email is null or empty", HttpStatus.BAD_REQUEST);
+            }
+
+            if (!EmailValidator.getInstance().isValid(request.getEmail())) {
+                throw new BadRequestException("Email has not valid format", HttpStatus.BAD_REQUEST);
             }
 
             //validar formato
@@ -35,8 +46,22 @@ public class UserAuthServiceImpl implements UserAuthService {
                 throw new BadRequestException("User Already Exists", HttpStatus.BAD_REQUEST);
             }
 
-            if (!EmailValidator.getInstance().isValid(request.getEmail())) {
-                throw new BadRequestException("Email has not valid format", HttpStatus.BAD_REQUEST);
+            //VALIDAMOS DATOS DE TELEFONO
+            if(request.getPhoneDTOS() != null){
+
+                for(PhoneDTO phone: request.getPhoneDTOS()){
+                    if(phone.getNumber() == null || phone.getNumber() == 0){
+                        throw new BadRequestException("Phone number is required", HttpStatus.BAD_REQUEST);
+                    }
+
+                    if(phone.getCityCode() == null || phone.getCityCode() == 0){
+                        throw new BadRequestException("City Code is required", HttpStatus.BAD_REQUEST);
+                    }
+
+                    if(!StringUtils.hasText(phone.getCountryCode()) || phone.getCountryCode().equals("0")){
+                        throw new BadRequestException("Country Code is required", HttpStatus.BAD_REQUEST);
+                    }
+                }
             }
 
             User savedUser = userRepository.save(userMapper.mapRequestToEntity(request));
