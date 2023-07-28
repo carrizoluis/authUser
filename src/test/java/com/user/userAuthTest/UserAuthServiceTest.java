@@ -1,8 +1,10 @@
 package com.user.userAuthTest;
 
 import com.user.userAuth.config.SpringBootConfig;
+import com.user.userAuth.model.dto.PhoneDTO;
 import com.user.userAuth.model.dto.SignUpRequestDTO;
 import com.user.userAuth.model.dto.UserResponseDTO;
+import com.user.userAuth.model.entity.Phone;
 import com.user.userAuth.model.entity.User;
 import com.user.userAuth.model.exception.BadRequestException;
 import com.user.userAuth.repository.UserRepository;
@@ -13,6 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,19 +59,14 @@ public class UserAuthServiceTest {
     }
 
     @Test
-    public void signUpAndEmailIsWrong() throws BadRequestException {
+    public void signUpAndEmailIsWrong() {
         try{
             SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO("lucho","test","passtest",null);
 
-            User userToSave = new User(0,"lucho","test","passtest", null, true, null);
-
-            User userResponse = new User(1,"lucho","test@hotmail.com","passtest", null, true, null);
-
-            UserResponseDTO responseExpected = new UserResponseDTO(1,"2023","2023","aaaddd222",true);
-
             Mockito.when(userRepository.findByEmail(signUpRequestDTO.getEmail())).thenReturn(null);
 
-            UserResponseDTO actualResponse = userAuthService.signUp(signUpRequestDTO);
+            userAuthService.signUp(signUpRequestDTO);
+
         }catch(BadRequestException ex){
             assertThat(ex).isInstanceOf(BadRequestException.class);
             assertThat(ex.getMessage()).isEqualTo("Email has not valid format");
@@ -76,17 +76,13 @@ public class UserAuthServiceTest {
     @Test
     public void signUpAndUserAlreadyExists(){
         try{
-            SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO("lucho","test","passtest",null);
-
-            User userToSave = new User(0,"lucho","test","passtest", null, true, null);
+            SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO("lucho","test@email.com","passtest",null);
 
             User userResponse = new User(1,"lucho","test@hotmail.com","passtest", null, true, null);
 
-            UserResponseDTO responseExpected = new UserResponseDTO(1,"2023","2023","aaaddd222",true);
-
             Mockito.when(userRepository.findByEmail(signUpRequestDTO.getEmail())).thenReturn(userResponse);
 
-            UserResponseDTO actualResponse = userAuthService.signUp(signUpRequestDTO);
+            userAuthService.signUp(signUpRequestDTO);
         }catch(BadRequestException ex){
             assertThat(ex).isInstanceOf(BadRequestException.class);
             assertThat(ex.getMessage()).isEqualTo("User Already Exists");
@@ -98,18 +94,81 @@ public class UserAuthServiceTest {
         try{
             SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO("lucho","test","",null);
 
-            User userToSave = new User(0,"lucho","test","passtest", null, true, null);
-
             User userResponse = new User(1,"lucho","test@hotmail.com","passtest", null, true, null);
-
-            UserResponseDTO responseExpected = new UserResponseDTO(1,"2023","2023","aaaddd222",true);
 
             Mockito.when(userRepository.findByEmail(signUpRequestDTO.getEmail())).thenReturn(userResponse);
 
-            UserResponseDTO actualResponse = userAuthService.signUp(signUpRequestDTO);
+            userAuthService.signUp(signUpRequestDTO);
         }catch(BadRequestException ex){
             assertThat(ex).isInstanceOf(BadRequestException.class);
             assertThat(ex.getMessage()).isEqualTo("Password is null or empty");
+        }
+    }
+
+    //PHONE VALIDATIONS
+    @Test
+    public void testPhoneCityCodeAndIsntExists() throws BadRequestException {
+        try{
+            PhoneDTO phoneDTO = new PhoneDTO(222351L, 0, "+54");
+
+            List<PhoneDTO> phoneList = new ArrayList<>();
+            phoneList.add(phoneDTO);
+
+            SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO("lucho","test@hotmail.com","passtest",null);
+
+            signUpRequestDTO.setPhoneDTOS(phoneList);
+
+            Mockito.when(userRepository.findByEmail(signUpRequestDTO.getEmail())).thenReturn(null);
+
+            userAuthService.signUp(signUpRequestDTO);
+
+        }catch(BadRequestException ex){
+            assertThat(ex).isInstanceOf(BadRequestException.class);
+            assertThat(ex.getMessage()).isEqualTo("City Code is required");
+        }
+    }
+
+    @Test
+    public void testPhoneNumberAndIsntExists() throws BadRequestException {
+        try{
+            PhoneDTO phoneDTO = new PhoneDTO(0L, 222, "+54");
+
+            List<PhoneDTO> phoneList = new ArrayList<>();
+            phoneList.add(phoneDTO);
+
+            SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO("lucho","test@hotmail.com","passtest",null);
+
+            signUpRequestDTO.setPhoneDTOS(phoneList);
+
+            Mockito.when(userRepository.findByEmail(signUpRequestDTO.getEmail())).thenReturn(null);
+
+            userAuthService.signUp(signUpRequestDTO);
+
+        }catch(BadRequestException ex){
+            assertThat(ex).isInstanceOf(BadRequestException.class);
+            assertThat(ex.getMessage()).isEqualTo("Phone number is required");
+        }
+    }
+
+    @Test
+    public void testPhoneCountryCodeAndIsntExists() throws BadRequestException {
+        try{
+            PhoneDTO phoneDTO = new PhoneDTO(0223L, 222, "");
+
+            List<PhoneDTO> phoneList = new ArrayList<>();
+            phoneList.add(phoneDTO);
+
+            SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO("lucho","test@hotmail.com","passtest",null);
+
+            signUpRequestDTO.setPhoneDTOS(phoneList);
+
+            Mockito.when(userRepository.findByEmail(signUpRequestDTO.getEmail())).thenReturn(null);
+
+            userAuthService.signUp(signUpRequestDTO);
+
+        }catch(BadRequestException ex){
+            assertThat(ex).isInstanceOf(BadRequestException.class);
+            assertThat(ex.getMessage()).isEqualTo("Country Code is required");
         }
     }
 

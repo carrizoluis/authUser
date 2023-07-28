@@ -4,7 +4,6 @@ import com.user.userAuth.config.SpringBootConfig;
 import com.user.userAuth.controller.exception.ExceptionHandler;
 import com.user.userAuth.model.exception.BadRequestException;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

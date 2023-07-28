@@ -47,7 +47,7 @@ public class UserAuthServiceImpl implements UserAuthService {
             }
 
             //VALIDAMOS DATOS DE TELEFONO
-            if(!request.getPhoneDTOS().isEmpty()){
+            if(request.getPhoneDTOS() != null){
 
                 for(PhoneDTO phone: request.getPhoneDTOS()){
                     if(phone.getNumber() == null || phone.getNumber() == 0){
